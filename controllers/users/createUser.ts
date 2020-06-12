@@ -13,8 +13,6 @@ const createUser = async( ctx: RouterContext ) => {
 
     ctx.response.status = 201
     ctx.response.body = newUser
-
-
 }
 
 export { createUser }

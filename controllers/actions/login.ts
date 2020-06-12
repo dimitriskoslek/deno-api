@@ -1,4 +1,4 @@
-import { Context } from 'https://deno.land/x/oak/mod.ts'
+import { RouterContext } from 'https://deno.land/x/oak/mod.ts'
 import { serve } from "https://deno.land/std/http/server.ts"
 import { makeJwt, setExpiration, Jose, Payload } from "https://deno.land/x/djwt/create.ts"
 import { validateJwt } from "https://deno.land/x/djwt/validate.ts"
@@ -11,7 +11,7 @@ const header: Jose = {
   typ: "JWT",
 }
 
-const login = async ( ctx: Context ) => {
+const login = async ( ctx: RouterContext ) => {
     const { value: { username, password }} = await ctx.request.body()
 
     // first find the username

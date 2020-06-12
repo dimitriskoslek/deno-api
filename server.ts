@@ -1,56 +1,10 @@
-import { Application, Router } from 'https://deno.land/x/oak/mod.ts'
-
-/******************
-** Host settings **
-******************/
+// Environment settings
 const env = Deno.env.toObject()
-const PORT = env.PORT || 4000
-const HOST = env.HOST || '127.0.0.1'
+const SERVER_PORT = env.SERVER_PORT || 4000
+const SERVER_HOST = env.SERVER_HOST || '127.0.0.1'
 
-/***************
-** Middleware **
-***************/
-import { authMiddleware } from './middleware/authUser.ts'
+import { application } from './application.ts'
 
-/***********
-** Routes **
-***********/
-// root
-import { welcomeMessage } from './routes/welcome.ts'
-// users
-import { getUsers } from './controllers/users/getUsers.ts'
-import { getUser } from './controllers/users/getUser.ts'
-import { createUser } from './controllers/users/createUser.ts'
-import { updateUser } from './controllers/users/updateUser.ts'
-import { deleteUser } from './controllers/users/deleteUser.ts'
-// actions
-import { register } from './controllers/actions/register.ts'
-import { login } from './controllers/actions/login.ts'
-import { guest } from './controllers/actions/guest.ts'
-import { auth } from './controllers/actions/auth.ts'
-
-const router = new Router()
-
-router
-    // root
-    .get('/', welcomeMessage)
-    // users
-    .get('/u', getUsers)
-    .get('/u/:username', getUser)
-    .post('/u', createUser)
-    .put('/u/:username', updateUser)
-    .delete('/u/:username', deleteUser)
-    // actions
-    .post('/register', register)
-    .post('/login', login)
-    .get('/guest', guest)
-    .get('/auth', authMiddleware, auth);
-
-/****************
-** Application **
-****************/
-const app = new Application()
-app.use(router.routes())
-app.use(router.allowedMethods())
-console.log(`Listening on ${PORT}`)
-await app.listen(`${HOST}:${PORT}`)
+// Listen
+console.log(`Listening on ${SERVER_HOST}:${SERVER_PORT}`)
+await application.listen(`${SERVER_HOST}:${SERVER_PORT}`)

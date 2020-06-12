@@ -1,7 +1,7 @@
-import { Context } from 'https://deno.land/x/oak/mod.ts'
+import { RouterContext } from 'https://deno.land/x/oak/mod.ts'
 
-const guest = ( ctx: Context ) => {
-    ctx.response.body = 'Logged in as a guest.'
+const guest = ( ctx: RouterContext ) => {
+    ctx.response.body = 'Welcome! You are logged in as a guest.'
 }
 
 export { guest }

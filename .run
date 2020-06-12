@@ -1,0 +1,1 @@
+find . | entr -r deno run $(cat .flags) server.ts

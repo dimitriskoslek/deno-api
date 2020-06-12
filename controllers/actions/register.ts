@@ -1,5 +1,4 @@
-import { RouterContext } from "https://deno.land/x/oak@v5.0.0/mod.ts"
-import { Context } from 'https://deno.land/x/oak/mod.ts'
+import { RouterContext } from 'https://deno.land/x/oak/mod.ts'
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import { usersCollection } from '../../database.ts'
 

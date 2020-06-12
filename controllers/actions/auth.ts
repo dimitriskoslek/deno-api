@@ -1,6 +1,6 @@
-import { Context } from 'https://deno.land/x/oak/mod.ts'
+import { RouterContext } from 'https://deno.land/x/oak/mod.ts'
 
-const auth = ( ctx: Context ) => {
+const auth = ( ctx: RouterContext ) => {
     ctx.response.body = 'Authentication successfully'
 }
 

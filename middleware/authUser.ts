@@ -3,7 +3,7 @@ import { validateJwt } from "https://deno.land/x/djwt/validate.ts"
 
 const key = "Y61Y;SmM[]LIF-rp"
 
-const authMiddleware = async (ctx: Context, next: any) => {
+const authMiddleware = async (ctx: Context, next: any ) => {
     const headers: Headers = ctx.request.headers
     const authorization = headers.get('Authorization')
     if(!authorization){
