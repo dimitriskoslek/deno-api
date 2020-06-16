@@ -2,7 +2,7 @@ import { RouterContext } from 'https://deno.land/x/oak/mod.ts'
 import { serve } from "https://deno.land/std/http/server.ts"
 import { makeJwt, setExpiration, Jose, Payload } from "https://deno.land/x/djwt/create.ts"
 import { validateJwt } from "https://deno.land/x/djwt/validate.ts"
-import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
+import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts"
 import { usersCollection } from '../../database.ts'
 
 const key = "Y61Y;SmM[]LIF-rp"
