@@ -1,1 +1,1 @@
-find . | entr -r deno run $(cat .flags) server.ts
+find . | entr -r bash -c 'source .env && deno run $(cat .flags) server.ts'

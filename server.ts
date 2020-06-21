@@ -1,4 +1,4 @@
-//import { exec } from 'https://deno.land/x/execute/mod.ts'
+import { exec } from 'https://deno.land/x/execute@v1.1.0/mod.ts'
 
 // Environment settings
 const env = Deno.env.toObject()
@@ -7,12 +7,12 @@ const SERVER_HOST = env.SERVER_HOST || '127.0.0.1'
 
 import { application } from './application.ts'
 
-//const result1 = await exec('deno -V')
-//console.log(result1)
+const result1 = await exec('deno -V')
+console.log(result1)
 // --> deno 1.0.0
 
-//const result2 = await exec(['which', 'deno'])
-//console.log(result2)
+const result2 = await exec(['which', 'deno'])
+console.log(result2)
 // --> /usr/local/bin/deno
 
 // Listen

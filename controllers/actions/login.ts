@@ -5,7 +5,8 @@ import { validateJwt } from "https://deno.land/x/djwt/validate.ts"
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts"
 import { usersCollection } from '../../database.ts'
 
-const key = "Y61Y;SmM[]LIF-rp"
+const env = Deno.env.toObject()
+const key = env.JWT_KEY
 const header: Jose = {
   alg: "HS256",
   typ: "JWT",
