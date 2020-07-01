@@ -146,6 +146,7 @@ const table4 = AsciiTable.fromJSON({
     rows: [ values ]
 })
 console.log(table4.toString())
+console.log('last check')
 
 /**************************
 ***************************
