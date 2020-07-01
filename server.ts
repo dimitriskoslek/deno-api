@@ -147,8 +147,6 @@ const table4 = AsciiTable.fromJSON({
 })
 console.log(table4.toString())
 
-console.log('testing git stuff')
-
 /**************************
 ***************************
 *** END OF TESTING AREA ***
