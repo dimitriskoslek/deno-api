@@ -3,5 +3,5 @@
 --allow-read
 --allow-run
 --allow-write
---unstable
 --allow-plugin
+--unstable

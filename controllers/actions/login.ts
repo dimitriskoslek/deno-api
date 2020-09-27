@@ -1,9 +1,11 @@
-import { RouterContext } from 'https://deno.land/x/oak/mod.ts'
-import { serve } from "https://deno.land/std/http/server.ts"
-import { makeJwt, setExpiration, Jose, Payload } from "https://deno.land/x/djwt/create.ts"
-import { validateJwt } from "https://deno.land/x/djwt/validate.ts"
-import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts"
+import type { RouterContext } from 'https://deno.land/x/oak@v6.2.0/mod.ts'
 import { usersCollection } from '../../database.ts'
+import { serve } from "https://deno.land/std@0.71.0/http/server.ts"
+import { makeJwt, setExpiration } from "https://deno.land/x/djwt@v1.6/create.ts"
+import type { Jose, Payload } from "https://deno.land/x/djwt@v1.6/create.ts"
+import { validateJwt } from "https://deno.land/x/djwt@v1.6/validate.ts"
+import * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts"
+
 
 const env = Deno.env.toObject()
 const key = env.JWT_KEY
@@ -13,10 +15,19 @@ const header: Jose = {
 }
 
 const login = async ( ctx: RouterContext ) => {
-    const { value: { username, password }} = await ctx.request.body()
+
+    /*NEW*/
+    const result = ctx.request.body()
+    const value = await result.value
+    const username = value.username
+    const password = value.password
+    /*OLD*/
+    //const { value: { username, password }} = await ctx.request.body()
 
     // first find the username
-    const foundUser = await usersCollection.findOne({ username: username })
+    const foundUser = await usersCollection.findOne({
+        username: username
+    })
 
     // If username not found, return
     if(!foundUser){
@@ -25,9 +36,10 @@ const login = async ( ctx: RouterContext ) => {
         ctx.response.body = { msg: 'The combination of username and password was incorrect.' }
         return
     }
+
     // compare password given with users stored and hashed password
-    const passCompare = bcrypt.compare(password, foundUser.password)
-    console.log(passCompare)
+
+    const passCompare = await bcrypt.compare(password, (foundUser as any).hashedPassword)
 
     if(!passCompare){
         console.log('password wrong')
@@ -37,16 +49,16 @@ const login = async ( ctx: RouterContext ) => {
     }
 
     const payload: Payload = {
-        iss: foundUser.username,
+        iss: (foundUser as any).username,
         exp: setExpiration(new Date().getTime() + 60000 * 60 * 24 * 7),
     }
-    const jwt = makeJwt({ key, header, payload })
+    const jwt = await makeJwt({ key, header, payload })
 
     if(jwt){
         ctx.response.status = 200
         ctx.response.body = {
-            username: foundUser.username,
-            jwt
+            username: (foundUser as any).username,
+            jwt: jwt
         }
     } else {
         ctx.response.status = 500

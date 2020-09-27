@@ -1,4 +1,4 @@
-import { MongoClient } from "https://deno.land/x/mongo@v0.8.0/mod.ts"
+import { MongoClient } from "https://deno.land/x/mongo@v0.12.1/mod.ts"
 
 const env = Deno.env.toObject()
 const MONGO_HOST = env.MONGO_HOST || '127.0.0.1'

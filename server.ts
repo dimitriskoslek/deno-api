@@ -12,24 +12,26 @@ import { application } from './application.ts'
 *************************/
 
 /* Run bash commands */
-import { exec } from 'https://deno.land/x/execute@v1.1.0/mod.ts'
-const result1 = await exec('deno -V')
-const result2 = await exec(['which', 'deno'])
-console.log(result1, result2)
+//import { exec } from 'https://deno.land/x/execute@v1.1.0/mod.ts'
+//const result1 = await exec('deno -V')
+//const result2 = await exec(['which', 'deno'])
+//console.log(result1, result2)
 
 /* Get machine ID */
-import { getMachineId } from 'https://deno.land/x/machine_id@v0.3.0/mod.ts'
-console.log('My Machine ID: ', await getMachineId())
+//import { getMachineId } from 'https://deno.land/x/machine_id@v0.3.0/mod.ts'
+//console.log('My Machine ID: ', await getMachineId())
+//import machineId from "https://deno.land/x/deno_machine_id@v0.1.0/mod.ts"
+//console.log('My Machine ID: ', await machineId())
 
 /* Use moment library */
-import { moment } from "https://deno.land/x/moment/moment.ts"
-var curDate = new Date()
-console.log('Turning' + ' ' + curDate + ' ' + 'into' + ' ' + moment(curDate).format())
+//import { moment } from "https://deno.land/x/deno_moment@v1.1.1/moment.ts"
+//var curDate = new Date()
+//console.log('Turning' + ' ' + curDate + ' ' + 'into' + ' ' + moment(curDate).format())
 
 /* Trying to send a mail using SMTP */
-import { SmtpClient } from "https://deno.land/x/smtp/mod.ts"
+//import { SmtpClient } from "https://deno.land/x/smtp@v0.5.1/mod.ts"
 
-const client = new SmtpClient()
+//const client = new SmtpClient()
 
 /*
 // Setup client connect
@@ -72,7 +74,7 @@ await client.close()
 */
 
 /* Prompting questions */
-import Ask from 'https://deno.land/x/ask/mod.ts';
+//import Ask from 'https://deno.land/x/ask/mod.ts';
 /*
 const ask = new Ask(); // global options are also supported! (see below)
 
@@ -93,6 +95,7 @@ console.log(answers); // { name: "Joe", age: 19 }
 */
 
 /* ASCII table */
+/*
 import AsciiTable, { AsciiAlign } from 'https://deno.land/x/ascii_table/mod.ts'
 
 // Basic setup
@@ -131,7 +134,11 @@ import { usersCollection } from './database.ts'
 // Grab a user
 var user = await usersCollection.findOne({ username: "dimitriskl" })
 // delete _id since it causes trouble
-delete user['_id']
+if(user){
+    if('_id' in user){
+        delete user['_id']
+    }
+}
 // Get the headings and values
 var keys = []
 var values = []
@@ -146,7 +153,7 @@ const table4 = AsciiTable.fromJSON({
     rows: [ values ]
 })
 console.log(table4.toString())
-console.log('last check')
+*/
 
 /**************************
 ***************************

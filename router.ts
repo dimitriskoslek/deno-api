@@ -1,4 +1,4 @@
-import { Router } from 'https://deno.land/x/oak/mod.ts'
+import { Router } from 'https://deno.land/x/oak@v6.2.0/mod.ts'
 
 /***************
 ** Middleware **

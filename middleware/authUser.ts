@@ -1,9 +1,9 @@
-import { Context } from 'https://deno.land/x/oak/mod.ts';
-import { validateJwt } from "https://deno.land/x/djwt/validate.ts"
+import type { RouterContext } from 'https://deno.land/x/oak@v6.2.0/mod.ts';
+import { validateJwt } from "https://deno.land/x/djwt@v1.6/validate.ts"
 
 const key = "Y61Y;SmM[]LIF-rp"
 
-const authMiddleware = async (ctx: Context, next: any ) => {
+const authMiddleware = async (ctx: RouterContext, next: any ) => {
     const headers: Headers = ctx.request.headers
     const authorization = headers.get('Authorization')
     if(!authorization){
@@ -15,7 +15,13 @@ const authMiddleware = async (ctx: Context, next: any ) => {
         ctx.response.status = 401
         return
     }
-    if(await validateJwt(jwt, key, { isThrowing: false })){
+    const validatedJwt = await validateJwt({
+        jwt: jwt,
+        key: key,
+        //isThrowing: false,
+        algorithm: ["HS256", "HS512"],
+    })
+    if(!validatedJwt.isValid){
         await next()
         return
     }
