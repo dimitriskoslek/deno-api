@@ -16,7 +16,6 @@ const createUser = async( ctx: RouterContext ) => {
         dateUpdated: new Date()
     }
     const userID = await usersCollection.insertOne(newUser)
-    console.log(userID)
 
     ctx.response.status = 201
     ctx.response.body = newUser

@@ -3,17 +3,18 @@ import * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts";
 import { usersCollection } from '../../database.ts'
 
 const register = async ( ctx: RouterContext ) => {
+    console.log('Somebody is trying to sign up')
 
     /*NEW*/
     const result = ctx.request.body()
-    const value = await result.value
-    /*OLD*/
-    //const { value } = await ctx.request.body()
+    var value = await result.value
 
+    // If we dont receive and 'application/json' we must parse the text data
+    if(ctx.request.headers.get('Content-Type') == 'text/plain;charset=UTF-8'){
+        value = JSON.parse(value)
+    }
 
-
-    // the !.username syntax puts TS at ease, in case value is null/undefined
-    const username = value!.username
+    const username = value.username
 
     const existingUser = await usersCollection.findOne({ username: username })
 
@@ -24,9 +25,8 @@ const register = async ( ctx: RouterContext ) => {
         return
     }
 
-    // Get the password an1d hash it
-    // the !.username syntax puts TS at ease, in case value is null/undefined
-    const password = value!.password
+    // Get the password and hash it
+    const password = value.password
     const salt = await bcrypt.genSalt(8)
     const hashedPassword = await bcrypt.hash(password, salt)
 
