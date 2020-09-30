@@ -18,7 +18,10 @@ const login = async ( ctx: RouterContext ) => {
 
     /*NEW*/
     const result = ctx.request.body()
-    const value = await result.value
+    var value = await result.value
+    if(ctx.request.headers.get('Content-Type') == 'text/plain;charset=UTF-8'){
+        value = JSON.parse(value)
+    }
     const username = value.username
     const password = value.password
     /*OLD*/
@@ -38,7 +41,6 @@ const login = async ( ctx: RouterContext ) => {
     }
 
     // compare password given with users stored and hashed password
-
     const passCompare = await bcrypt.compare(password, (foundUser as any).hashedPassword)
 
     if(!passCompare){
@@ -57,12 +59,13 @@ const login = async ( ctx: RouterContext ) => {
     if(jwt){
         ctx.response.status = 200
         ctx.response.body = {
-            username: (foundUser as any).username,
+            username: username,
             jwt: jwt
         }
     } else {
         ctx.response.status = 500
         ctx.response.body = { msg: "Internal Server Error." }
+        ctx.response.headers.set('Access-Control-Allow-Origin', '*')
     }
 }
 
