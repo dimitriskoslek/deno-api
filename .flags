@@ -5,3 +5,4 @@
 --allow-write
 --allow-plugin
 --unstable
+--watch

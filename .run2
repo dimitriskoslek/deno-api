@@ -1,0 +1,1 @@
+bash -c 'source .env && deno run $(cat .flags) server.ts'
